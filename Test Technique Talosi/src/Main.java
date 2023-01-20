@@ -11,12 +11,12 @@ public class Main {
         threeStack.push(3, "\"{name:\"object7\"}\"");
 
 
-        threeStack.pop(2);
-        threeStack.pop(2);
-        threeStack.pop(1);
-        threeStack.pop(1);
-        threeStack.pop(3);
-        threeStack.pop(1);
-        threeStack.pop(4);
+        threeStack.pop(2); // display {name:"object5"}
+        threeStack.pop(2); // display {name:"object4"}
+        threeStack.pop(1); // display {name:"object2"}
+        threeStack.pop(1); // display {name:"object1"}
+        threeStack.pop(3); // display {name:"object7"}
+        threeStack.pop(1); // throw Exception
+        threeStack.pop(4); // throw Exception
     }
 }
