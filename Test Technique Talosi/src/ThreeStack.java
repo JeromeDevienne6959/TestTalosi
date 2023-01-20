@@ -2,7 +2,8 @@ import java.util.LinkedList;
 
 public class ThreeStack {
     //ATTRIBUTS
-    private LinkedList[] threeStack = {new LinkedList<>(),new LinkedList<>(),new LinkedList<>()};
+    private final StringStack[] threeStack = {new StringStack(),new StringStack(),new StringStack()};
+
 
     public class MyEmptyStackException extends Exception{
         public MyEmptyStackException(String errorMessage){
@@ -28,7 +29,7 @@ public class ThreeStack {
             if(numero > this.threeStack.length){
                 throw new NoStackException("Erreur, la stack "+numero+" n'existe pas !!!");
             }
-            this.threeStack[numero-1].add(0,s);
+            this.threeStack[numero-1].add(s);
         }
         catch (NoStackException e){
             e.printStackTrace();
@@ -46,10 +47,10 @@ public class ThreeStack {
             return;
         }
         try{
-            if(this.threeStack[numero].isEmpty()){
+            if(this.threeStack[numero-1].isEmpty()){
                 throw new MyEmptyStackException("Erreur, la stack "+numero+" est vide !!!");
             }
-            System.out.println(this.threeStack[numero-1].remove(0));
+            System.out.println(this.threeStack[numero-1].remove());
         }
         catch (MyEmptyStackException e){
             e.printStackTrace();
