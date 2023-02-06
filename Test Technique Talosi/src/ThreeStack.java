@@ -2,16 +2,18 @@ import java.util.LinkedList;
 
 public class ThreeStack {
     //ATTRIBUTS
-    private final StringStack[] threeStack = {new StringStack(),new StringStack(),new StringStack()};
+    private static final int MAXSIZE = 50;
+    private final String[] array;
+    private static int indexOfLast;
 
 
-    public class MyEmptyStackException extends Exception{
+    public static class MyEmptyStackException extends Exception{
         public MyEmptyStackException(String errorMessage){
             super(errorMessage);
         }
     }
 
-    public class NoStackException extends Exception{
+    public static class NoStackException extends Exception{
         public NoStackException(String errorMessage){
             super(errorMessage);
         }
@@ -20,16 +22,19 @@ public class ThreeStack {
     //CONSTRUCTEURS
 
     public ThreeStack() {
-
+        this.array = new String[MAXSIZE];
+        indexOfLast = -1;
     }
 
     //METHODES
-    public void push(int numero, String s) throws NoStackException{
+    public void push(int numero, String s) {
         try{
-            if(numero > this.threeStack.length){
-                throw new NoStackException("Erreur, la stack "+numero+" n'existe pas !!!");
+            if(numero < 0 || numero > 3){
+                throw new NoStackException("Erreur, la stack " + numero + " n'existe pas !!!");
             }
-            this.threeStack[numero-1].add(s);
+            String s1 = numero + s;
+            this.array[indexOfLast+1]=s1;
+            indexOfLast++;
         }
         catch (NoStackException e){
             e.printStackTrace();
@@ -37,20 +42,57 @@ public class ThreeStack {
 
     }
 
-    public void pop(int numero) throws MyEmptyStackException{
-        try{
-            if(numero > this.threeStack.length){
-                throw new NoStackException("Erreur, la stack "+numero+" n'existe pas !!!");
+    public boolean isEmpty(int numero){
+        String appartientAListe = null;
+        for(int i=0; i<indexOfLast; i++){
+            String s = this.array[i];
+            appartientAListe = s.substring(0,1);
+            if(appartientAListe.equals(Integer.toString(numero))){
+                return false;
             }
+        }
+        return true;
+    }
+
+    public int getLast(int numero){
+        int lastindex = 0;
+        for(int i=0; i<indexOfLast+1; i++){
+            if(this.array[i].substring(0, 1).equals(Integer.toString(numero))){
+                lastindex = i;
+            }
+        }
+        return lastindex;
+    }
+
+    public void decaller(int numero){
+        for(int i=numero; i<indexOfLast; i++ ){
+            this.array[i] = this.array[i+1];
+        }
+        this.array[indexOfLast] = null;
+        indexOfLast --;
+    }
+
+    public void pop(int numero) {
+        try{
+            if(numero < 0 || numero > 3){
+                throw new NoStackException("Erreur, la stack " + numero + " n'existe pas !!!");
+            }
+
         } catch (NoStackException e) {
             e.printStackTrace();
             return;
         }
         try{
-            if(this.threeStack[numero-1].isEmpty()){
-                throw new MyEmptyStackException("Erreur, la stack "+numero+" est vide !!!");
+            if(this.isEmpty(numero)){
+                throw new MyEmptyStackException("Erreur, la stack " + numero + " est vide !!!");
             }
-            System.out.println(this.threeStack[numero-1].remove());
+            int pos = getLast(numero);
+
+            String element = this.array[pos];
+            this.decaller(pos);
+            element = element.substring(1);
+            System.out.println(element);
+
         }
         catch (MyEmptyStackException e){
             e.printStackTrace();
